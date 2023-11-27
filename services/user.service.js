@@ -3,9 +3,9 @@ const apiError = require('../utils/apiError')
 const httpStatus = require('http-status')
 
 const register = async(userBody) =>{
-  if( await User.isEmailTaken(userBody.email)){
-    throw new apiError(httpStatus.BAD_REQUEST, 'Email already taken');
-  }
+  // if( await User.isEmailTaken(userBody.email)){
+  //   throw new apiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  // }
   return User.create(userBody)
 }
 

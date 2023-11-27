@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 const {toJSON, paginate, } = require('./plugins')
 
 const userSchema = new mongoose.Schema({
-  speudo: {
+  pseudo: {
     type: String,
     required: true
   },
@@ -15,8 +15,6 @@ const userSchema = new mongoose.Schema({
   telephone: {
     type: String,
     required: true,
-    unique: true,
-    trim: true
   },
   isNumberVerified: {
     type: Boolean,

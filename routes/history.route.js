@@ -1,11 +1,12 @@
 const express = require('express')
 const {historyController} = require('../controllers')
+const auth = require('../middlewares/auth')
 
 const router = express.Router()
 
-router.post('/add', historyController.add)
-router.get('/', historyController.getAll)
+router.post('/add', auth(), historyController.add)
+router.get('/', auth(), historyController.getAll)
 router.route('/:id')
-    .get(historyController.getOne)
-    .delete(historyController.deleteOne)
+    .get(auth(), historyController.getOne)
+    .delete(auth(), historyController.deleteOne)
 module.exports = router
