@@ -16,14 +16,20 @@ const getOne = catchAsync(async(req, res) =>{
     res.send(result)
 })
 
-const getAll = catchAsync(async(req, res) =>{
-    const result = await historyService.getAll()
+const getAllByUserId = catchAsync(async(req, res) =>{
+    const result = await historyService.getAllByUserId(req.query)
+    res.send(result)
+})
+
+const visibility = catchAsync(async(req, res) =>{
+    const result = await historyService.visibility(req.params.id, req.body)
     res.send(result)
 })
 
 module.exports = {
     add,
     deleteOne,
-    getAll,
-    getOne
+    getAllByUserId,
+    getOne,
+    visibility
 }

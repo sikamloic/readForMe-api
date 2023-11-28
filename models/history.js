@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const {toJSON, paginate, } = require('./plugins')
 
 const historySchema = new mongoose.Schema({
     userId:{
@@ -6,6 +7,10 @@ const historySchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    // title: {
+    //     type: String,
+    //     required: true
+    // },
     text: {
         type: String,
         required: true
@@ -19,6 +24,9 @@ const historySchema = new mongoose.Schema({
         default: false
     }
 })
+
+historySchema.plugin(toJSON)
+paginate(historySchema)
 
 const History = mongoose.model('History', historySchema);
 

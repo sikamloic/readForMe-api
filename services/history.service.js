@@ -23,7 +23,7 @@ const add = async(userId, body) =>{
 
 const deleteOne = async(id) =>{
     const history = await getOne(id)
-    return history.deleteOne(id)
+    return history.deleteOne({id})
 }
 
 const getOne = async(id) =>{
@@ -32,13 +32,22 @@ const getOne = async(id) =>{
     return history
 }
 
-const getAll = async(id) =>{
-    return History.find()
+const getAllByUserId = async(query) =>{
+    let filter = JSON.parse(query.filter)
+    let options = JSON.parse(query.options)
+    return History.paginate(filter, options)
 }
+
+const visibility = async(id, body) =>{
+    const history = await getOne(id)
+    return history.updateOne({public: body.public})
+}
+
 
 module.exports = {
     add,
     deleteOne,
-    getAll,
-    getOne
+    getAllByUserId,
+    getOne,
+    visibility
 }
