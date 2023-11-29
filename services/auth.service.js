@@ -16,6 +16,15 @@ const loginUserWithEmailAndPassword = async (email, password) => {
   return user;
 };
 
+const loginUserWithNumberAndPassword = async (number, password) => {
+  const user = await userService.getUserByNumber(number);
+  if (!user || !(await user.isPasswordMatch(password))) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Numéro de téléphone ou mot de passe incorrect');
+  }
+  console.log(user)
+  return user;
+};
+
 const logout = async (refreshToken) => {
   const refreshTokenDoc = await Token.findOne({ token: refreshToken, type: tokenTypes.REFRESH, blacklisted: false });
   if (!refreshTokenDoc) {
@@ -67,4 +76,5 @@ module.exports = {
   refreshAuth,
   resetPassword,
   verifyEmail,
+  loginUserWithNumberAndPassword
 }

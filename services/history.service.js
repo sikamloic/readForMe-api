@@ -3,21 +3,11 @@ const httpStatus = require('http-status')
 const apiError = require('../utils/apiError')
 
 const add = async(userId, body) =>{
-    let history
-    if(body.public){
-        history = await History.create({
-            userId: userId,
-            text: body.text,
-            public: body.public
-        })
-    }
-    else{
-        history = await History.create({
-            userId: userId,
-            text: body.text,
-            public: body.public
-        })
-    }
+    const history = await History.create({
+        userId: userId,
+        text: body.text,
+        titre: body.titre
+    })
     return history
 }
 

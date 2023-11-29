@@ -1,9 +1,11 @@
 const express = require('express')
 const {userController} = require('../controllers')
+const {userValidation} = require('../validations')
+const validate = require('../middlewares/validate')
 
 const router = express.Router()
 
-router.post('/register', userController.register)
+router.post('/register', validate(userValidation.register), userController.register)
 router.route('/:id')
   .get(userController.getUser)
   .delete(userController.deleteUser)

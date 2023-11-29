@@ -3,9 +3,15 @@ const apiError = require('../utils/apiError')
 const httpStatus = require('http-status')
 
 const register = async(userBody) =>{
-  // if( await User.isEmailTaken(userBody.email)){
-  //   throw new apiError(httpStatus.BAD_REQUEST, 'Email already taken');
-  // }
+  if( await User.isNumberTaken(userBody.telephone)){
+    throw new apiError(httpStatus.BAD_REQUEST, ' Ce numéro de téléphone existe déjà !!!');
+  }
+  if( await User.isPseudoTaken(userBody.pseudo)){
+    throw new apiError(httpStatus.BAD_REQUEST, 'Ce pseudo existe déjà !!!');
+  }
+  if( await User.isAyobaIdTaken(userBody.ayobaId)){
+    throw new apiError(httpStatus.BAD_REQUEST, 'Cet identifiant AYOBA existe déjà !!!');
+  }
   return User.create(userBody)
 }
 
@@ -46,6 +52,10 @@ const uploadImage = async(id, file) =>{
   return user.updateOne({image: file}, {new: true})
 }
 
+const getUserByNumber = async(number) =>{
+  return User.findOne({telephone: number})
+}
+
 module.exports = {
   register,
   getUserByEmail,
@@ -53,5 +63,6 @@ module.exports = {
   deleteUserById,
   updateUserById,
   getAllUsers,
-  uploadImage
+  uploadImage,
+  getUserByNumber
 }

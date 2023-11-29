@@ -5,13 +5,20 @@ const register = {
   body: Joi.object().keys({
     ayobaId: Joi.string().required(),
     pseudo: Joi.string().required(),
-    telephone: Joi.number().required()
+    telephone: Joi.number().required(),
   }),
 };
 
-const login = {
+const loginUserWithEmailAndPassword = {
   body: Joi.object().keys({
     email: Joi.string().required(),
+    password: Joi.string().required(),
+  }),
+};
+
+const loginUserWithNumberAndPassword = {
+  body: Joi.object().keys({
+    telephone: Joi.string().required(),
     password: Joi.string().required(),
   }),
 };
@@ -60,7 +67,8 @@ const verifyCode = {
 
 module.exports = {
   register,
-  login,
+  loginUserWithEmailAndPassword,
+  loginUserWithNumberAndPassword,
   logout,
   refreshTokens,
   forgotPassword,
