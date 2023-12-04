@@ -1,6 +1,7 @@
 const {User} = require('../models')
 const apiError = require('../utils/apiError')
 const httpStatus = require('http-status')
+const {authService, tokenService} = require('../services')
 
 const register = async(userBody) =>{
   // if( await User.isNumberTaken(userBody.telephone)){
@@ -13,7 +14,9 @@ const register = async(userBody) =>{
   //   throw new apiError(httpStatus.BAD_REQUEST, 'Cet identifiant AYOBA existe déjà !!!');
   // }
   if(await (await User.isNumberTaken(userBody.telephone) && await User.isPseudoTaken(userBody.pseudo) && await User.isAyobaIdTaken(userBody.ayobaId))){
-    throw new apiError(httpStatus.BAD_REQUEST, 'Identifiant ou pseudo ou numéto de téléphone existant déjà !!!');
+    const user = await getUserByNumber(userBody.telephone)
+    const token = await tokenService.generateAuthTokens(user)
+    return { user, token }
   }
   return User.create(userBody)
 }
