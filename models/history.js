@@ -15,6 +15,9 @@ const historySchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    audioUrl: {
+        type: String
+    },
     date: {
         type: Date,
         default: Date.now()
