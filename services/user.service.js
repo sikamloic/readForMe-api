@@ -3,14 +3,17 @@ const apiError = require('../utils/apiError')
 const httpStatus = require('http-status')
 
 const register = async(userBody) =>{
-  if( await User.isNumberTaken(userBody.telephone)){
-    throw new apiError(httpStatus.BAD_REQUEST, ' Ce numéro de téléphone existe déjà !!!');
-  }
-  if( await User.isPseudoTaken(userBody.pseudo)){
-    throw new apiError(httpStatus.BAD_REQUEST, 'Ce pseudo existe déjà !!!');
-  }
-  if( await User.isAyobaIdTaken(userBody.ayobaId)){
-    throw new apiError(httpStatus.BAD_REQUEST, 'Cet identifiant AYOBA existe déjà !!!');
+  // if( await User.isNumberTaken(userBody.telephone)){
+  //   throw new apiError(httpStatus.BAD_REQUEST, ' Ce numéro de téléphone existe déjà !!!');
+  // }
+  // if( await User.isPseudoTaken(userBody.pseudo)){
+  //   throw new apiError(httpStatus.BAD_REQUEST, 'Ce pseudo existe déjà !!!');
+  // }
+  // if( await User.isAyobaIdTaken(userBody.ayobaId)){
+  //   throw new apiError(httpStatus.BAD_REQUEST, 'Cet identifiant AYOBA existe déjà !!!');
+  // }
+  if((await User.isNumberTaken(userBody.telephone) && await User.isPseudoTaken(userBody.pseudo) && await User.isAyobaIdTaken(userBody.ayobaId))){
+    throw new apiError(httpStatus.BAD_REQUEST, 'Identifiant ou pseudo ou numéto de téléphone existant déjà !!!');
   }
   return User.create(userBody)
 }
