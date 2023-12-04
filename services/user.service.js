@@ -1,7 +1,7 @@
 const {User} = require('../models')
 const apiError = require('../utils/apiError')
 const httpStatus = require('http-status')
-const {authService, tokenService} = require('../services')
+const tokenService = require('./token.service')
 
 const register = async(userBody) =>{
   // if( await User.isNumberTaken(userBody.telephone)){
