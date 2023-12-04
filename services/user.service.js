@@ -15,8 +15,7 @@ const register = async(userBody) =>{
   // }
   if(await (await User.isNumberTaken(userBody.telephone) && await User.isPseudoTaken(userBody.pseudo) && await User.isAyobaIdTaken(userBody.ayobaId))){
     const user = await getUserByNumber(userBody.telephone)
-    const token = await tokenService.generateAuthTokens(user)
-    return { user, token }
+    return user
   }
   return User.create(userBody)
 }
