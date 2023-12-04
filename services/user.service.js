@@ -12,7 +12,7 @@ const register = async(userBody) =>{
   // if( await User.isAyobaIdTaken(userBody.ayobaId)){
   //   throw new apiError(httpStatus.BAD_REQUEST, 'Cet identifiant AYOBA existe déjà !!!');
   // }
-  if(await User.isNumberTaken(userBody.telephone) && await User.isPseudoTaken(userBody.pseudo) && await User.isAyobaIdTaken(userBody.ayobaId)){
+  if(await (User.isNumberTaken(userBody.telephone) && User.isPseudoTaken(userBody.pseudo) && User.isAyobaIdTaken(userBody.ayobaId))){
     throw new apiError(httpStatus.BAD_REQUEST, 'Identifiant ou pseudo ou numéto de téléphone existant déjà !!!');
   }
   return User.create(userBody)
