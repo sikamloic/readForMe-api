@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   },
   ayobaId: {
     type: String,
-    required: true
+    // required: true
   },
   telephone: {
     type: String,

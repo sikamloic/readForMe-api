@@ -3,21 +3,23 @@ const apiError = require('../utils/apiError')
 const httpStatus = require('http-status')
 const tokenService = require('./token.service')
 
-const register = async(userBody) =>{
-  // if( await User.isNumberTaken(userBody.telephone)){
-  //   throw new apiError(httpStatus.BAD_REQUEST, ' Ce numéro de téléphone existe déjà !!!');
-  // }
-  // if( await User.isPseudoTaken(userBody.pseudo)){
-  //   throw new apiError(httpStatus.BAD_REQUEST, 'Ce pseudo existe déjà !!!');
-  // }
-  // if( await User.isAyobaIdTaken(userBody.ayobaId)){
-  //   throw new apiError(httpStatus.BAD_REQUEST, 'Cet identifiant AYOBA existe déjà !!!');
-  // }
-  if(await (await User.isNumberTaken(userBody.telephone) && await User.isPseudoTaken(userBody.pseudo) && await User.isAyobaIdTaken(userBody.ayobaId))){
-    const user = await getUserByNumber(userBody.telephone)
-    return user
+const register = async(body) =>{
+  const user = await getUserByNumber(body.telephone)
+  if(user){
+    if(user.pseudo == body.pseudo){
+      return user
+    }
+    else{
+      user.updateOne({pseudo: body.pseudo})
+      return user
+    }
   }
-  return User.create(userBody)
+  else{
+    if( await User.isPseudoTaken(body.pseudo)){
+      throw new apiError(httpStatus.BAD_REQUEST, "Ce pseudo est déjà utilisé !!!")
+    }
+    return User.create(body)
+  }
 }
 
 const getUserById = async(id) =>{
